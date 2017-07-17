@@ -50,8 +50,7 @@ public class MenuManager : MonoBehaviour
 
     public void Github()
     {
-        Application.OpenURL("https://github.com/Cesarsk");
-        Application.OpenURL("https://github.com/Shiro23");
+        Application.OpenURL("https://github.com/Cesarsk/Unity-Dodgey");
         Debug.Log("Opened external website");
     }
 
