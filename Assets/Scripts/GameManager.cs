@@ -13,7 +13,10 @@ public class GameManager : MonoBehaviour {
     public static float timeScale;
     public static float fixedDeltaTime;
 
-    public static bool isGreenEnabled = false, isRedEnabled = false, isYellowEnabled = false, isPurpleEnabled = false, isBlueEnabled = false, isOrangeEnabled = false, isIndigoEnabled = false, isRainbowEnabled = false;
+    public static bool isGreenEnabled = false, isRedEnabled = false, isYellowEnabled = false, 
+      isPurpleEnabled = false, isBlueEnabled = false, isOrangeEnabled = false, 
+      isIndigoEnabled = false, isRainbowEnabled = false;
+
     public static int level = 1;
     public Text pixelLabel;
     public Animator pixelLabelAnimator;
@@ -49,6 +52,29 @@ public class GameManager : MonoBehaviour {
         Time.fixedDeltaTime = 0.02f;
         pixelLabel.text = "Dodge the blocks";
         level = 1;
+        Player.invertedControls = false;
+        if (MenuManager.isImpossibleMode)
+        {
+            level = 7;
+            isGreenEnabled = true;
+            isRedEnabled = true;
+            isYellowEnabled = true;
+            isPurpleEnabled = true;
+            isBlueEnabled = true;
+            isOrangeEnabled = true;
+            isIndigoEnabled = true;
+            isRainbowEnabled = true;
+        } else
+        {
+            isGreenEnabled = false;
+            isRedEnabled = false;
+            isYellowEnabled = false;
+            isPurpleEnabled = false;
+            isBlueEnabled = false;
+            isOrangeEnabled = false;
+            isIndigoEnabled = false;
+            isRainbowEnabled = false;
+        }
         SwitchLevel();
         LoadHighScore();
         isPaused = false;
@@ -289,6 +315,7 @@ public class GameManager : MonoBehaviour {
         sounds[1].Stop();
         sounds[1].mute = false;
         sounds[0].Play();
+        MenuManager.isImpossibleMode = false;
         SceneManager.LoadScene("Menu");
     }
 }

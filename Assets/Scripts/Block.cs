@@ -16,7 +16,8 @@ public class Block : MonoBehaviour {
 
     private void Start()
     {
-        GetComponent<Rigidbody2D>().gravityScale += Time.timeSinceLevelLoad / GRAVITY_SCALE_FACTOR;
+        if (!MenuManager.isImpossibleMode) GetComponent<Rigidbody2D>().gravityScale += Time.timeSinceLevelLoad / GRAVITY_SCALE_FACTOR;
+        else GetComponent<Rigidbody2D>().gravityScale += ((Time.timeSinceLevelLoad / GRAVITY_SCALE_FACTOR) / 1.5f);
         PickBlock();
         sounds = AudioManager.GetInstance().GetSounds();
 	}
@@ -38,8 +39,11 @@ public class Block : MonoBehaviour {
             sounds[2].Play();
             if (Score.score % 15 == 0)
             {
-                GameManager.level += 1;
-                FindObjectOfType<GameManager>().SwitchLevel();
+                if (!MenuManager.isImpossibleMode)
+                {
+                    GameManager.level += 1;
+                    FindObjectOfType<GameManager>().SwitchLevel();
+                }
             }
         }
     }

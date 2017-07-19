@@ -9,6 +9,9 @@ public class MenuManager : MonoBehaviour
     static MenuManager instance;
 	public Button audio_on, audio_off, music_on, music_off;
     public AudioSource[] sounds;
+    public Text impossibleLabel;
+    private bool impossibleUnlockKey = false;
+    public static bool isImpossibleMode = false;
 
 	private void Awake()
     {
@@ -43,9 +46,32 @@ public class MenuManager : MonoBehaviour
         Application.OpenURL("https://play.google.com/store/apps/developer?id=Cesarsk+Dev+Team");
     }
 
+	public void StartImpossibleMode()
+	{
+        if (impossibleUnlockKey)
+        {
+            sounds[0].Stop();
+            sounds[1].Play();
+            isImpossibleMode = true;
+            SceneManager.LoadScene("ImpossibleMode");
+        }
+        else
+        {
+            sounds[4].Play();
+        }
+	}
+
     private void LoadHighScore()
     {
-        highscore.GetComponent<Text>().text = "Highscore: " + PlayerPrefs.GetInt("highscore", 0);
+        int highscoreInt = PlayerPrefs.GetInt("highscore",0);
+        highscore.GetComponent<Text>().text = "Highscore: " + highscoreInt;
+        if (highscoreInt >= 30)
+        {
+            //impossible mode unlock
+            impossibleUnlockKey = true;
+            impossibleLabel.text = "Impossible";
+        }
+
     }
 
     public void Github()
